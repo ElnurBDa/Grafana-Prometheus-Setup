@@ -1,0 +1,24 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
+    basic_auth:
+      username: admin
+      password: securepassword
+    static_configs:
+      - targets: ['<IP>:9090']  # Prometheus itself over HTTPS
+
+  - job_name: 'grafana'
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
+    static_configs:
+      - targets: ['<IP>:3000']  # Grafana over HTTPS
+
+  - job_name: "docker"
+    static_configs:
+      - targets: ["<IP>:9323"]
